@@ -45,8 +45,9 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'osyo-manga/vim-anzu'
 Plug 'freeo/vim-kalisi'
 Plug 'mbbill/desertEx'
+Plug 'RyanMcG/vim-j'
+" Plug 'jpalardy/vim-slime'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install'  }
-
 " Plug 'legendre6891/yalp'
 " Plug '~/yalp'
 filetype plugin indent on
@@ -59,6 +60,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               General Settings                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 """"""""""""
 "  Colors  "
@@ -145,6 +147,20 @@ set nofoldenable
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""
+"  macvim-specific `hack`  "
+""""""""""""""""""""""""""""
+if has("macunix")
+  map ƒ <M-f>
+  map! ƒ <M-f>
+
+  map π <M-p>
+  map! π <M-p>
+
+  map ∫ <M-b>
+  map! ∫ <M-b>
+end
+
 """"""""""""""""""""""
 "  General Mappings  "
 """"""""""""""""""""""
@@ -161,6 +177,19 @@ nnoremap z<Space> za
 """""""""""""""""""
 nnoremap ss :sp<cr>
 nnoremap sv :vsp<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""
+"  Better command line (readline mappings)  "
+"""""""""""""""""""""""""""""""""""""""""""""
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
 
 """""""""""""""""""""
 "  Plugin Mappings  "
@@ -292,4 +321,10 @@ map g# <Plug>(incsearch-nohl-g#)
 "  anzu.vim  "
 """"""""""""""
 set statusline=%{anzu#search_status()}
+
+"""""""""""""""
+"  vim-slime  "
+"""""""""""""""
+let g:slime_target = "tmux"
+let g:slime_paste_file = "$HOME/.slime_paste"
 
