@@ -37,7 +37,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'Konfekt/FastFold'
 Plug 'JuliaLang/julia-vim'
-Plug 'godlygeek/csapprox'
 Plug 'whatyouhide/vim-gotham'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-dispatch'
@@ -78,7 +77,7 @@ if has("gui_running")
     colorscheme hybrid
 else
     set bg=dark
-    colorscheme hybrid
+    colorscheme solarized
 endif
 
 """"""""""
@@ -255,7 +254,7 @@ nnoremap <silent> <C-f> :FZFMru<cr>
 "  Lightline  "
 """""""""""""""
 set laststatus=2
-" let g:lightline = {'colorscheme': 'Tommorow_Night'}
+let g:lightline = {'colorscheme': 'solarized_dark'}
 
 """""""""""""""
 "  Ultisnips  "
@@ -287,6 +286,7 @@ let g:tex_fold_enabled=0
 let g:tex_flavor="latex"
 augroup filetype_tex
     autocmd!
+    autocmd FileType tex :let b:AutoPairs = g:AutoPairs
     autocmd FileType tex :call extend(b:AutoPairs, {"$":"$"})
 augroup END
 
