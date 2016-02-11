@@ -32,7 +32,7 @@ Plug 'thinca/vim-visualstar'
 Plug 'dag/vim2hs'
 Plug 'tpope/vim-vividchalk'
 Plug 'dogrover/vim-pentadactyl'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-unimpaired'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'Konfekt/FastFold'
@@ -59,7 +59,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               General Settings                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+set visualbell t_vb=
 
 """"""""""""
 "  Colors  "
@@ -74,10 +74,13 @@ if &term =~ '256color'
 endif
 
 if has("gui_running")
+    set bg=dark
+    set guioptions=c
+    let g:hybrid_custom_term_colors = 1
     colorscheme hybrid
 else
     set bg=dark
-    colorscheme solarized
+    colorscheme hybrid
 endif
 
 """"""""""
@@ -235,7 +238,7 @@ nnoremap <silent> <SID>FZFBuffer :call fzf#run({
 \ })<CR>
 
 nmap <silent> <C-b> <SID>FZFBuffer
-nmap <silent> <tab><tab> <SID>FZFBuffer
+nmap <silent> <space><space> <SID>FZFBuffer
 
 """"""""""""
 "  FZFMRU  "
@@ -254,7 +257,11 @@ nnoremap <silent> <C-f> :FZFMru<cr>
 "  Lightline  "
 """""""""""""""
 set laststatus=2
-let g:lightline = {'colorscheme': 'solarized_dark'}
+if has("gui_running")
+  let g:lightline = {'colorscheme': 'jellybeans'}
+else
+  let g:lightline = {'colorscheme': 'jellybeans'}
+endif
 
 """""""""""""""
 "  Ultisnips  "
@@ -283,12 +290,14 @@ let g:tex_fold_enabled=0
 """"""""""""""""""
 "  LaTeX/AucTeX  "
 """"""""""""""""""
-let g:tex_flavor="latex"
-augroup filetype_tex
-    autocmd!
-    autocmd FileType tex :let b:AutoPairs = g:AutoPairs
-    autocmd FileType tex :call extend(b:AutoPairs, {"$":"$"})
-augroup END
+
+"""" I got rid of auto-pairs
+" let g:tex_flavor="latex"
+" augroup filetype_tex
+"     autocmd!
+"     autocmd FileType tex :let b:AutoPairs = g:AutoPairs
+"     autocmd FileType tex :call extend(b:AutoPairs, {"$":"$"})
+" augroup END
 
 """""""""""""""
 "  Vim-Sneak  "
