@@ -60,6 +60,7 @@ call plug#end()
 "                               General Settings                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set visualbell t_vb=
+set novisualbell
 
 """"""""""""
 "  Colors  "
@@ -87,7 +88,7 @@ endif
 "  Font  "
 """"""""""
 if has("gui_running")
-  set guifont=PragmataPro:h14
+  set guifont=PragmataPro\ Mono
 endif
 
 """"""""""""""""""""""""""
