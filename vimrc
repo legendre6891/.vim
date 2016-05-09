@@ -8,11 +8,9 @@ call plug#begin('~/.vim/plugged')
 """""""""""""
 Plug 'tpope/vim-fugitive'
 Plug 'SirVer/ultisnips'
-Plug 'itchyny/lightline.vim'
 Plug 'd11wtq/tomorrow-theme-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-sensible'
@@ -32,7 +30,6 @@ Plug 'thinca/vim-visualstar'
 Plug 'dag/vim2hs'
 Plug 'tpope/vim-vividchalk'
 Plug 'dogrover/vim-pentadactyl'
-" Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-unimpaired'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'Konfekt/FastFold'
@@ -40,15 +37,11 @@ Plug 'JuliaLang/julia-vim'
 Plug 'whatyouhide/vim-gotham'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-dispatch'
-Plug 'haya14busa/incsearch.vim'
-Plug 'osyo-manga/vim-anzu'
 Plug 'freeo/vim-kalisi'
 Plug 'mbbill/desertEx'
 Plug 'RyanMcG/vim-j'
-" Plug 'jpalardy/vim-slime'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install'  }
-" Plug 'legendre6891/yalp'
-" Plug '~/yalp'
+Plug 'vim-scripts/mom.vim'
 filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
@@ -61,6 +54,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set visualbell t_vb=
 set novisualbell
+set belloff=all
 
 """"""""""""
 "  Colors  "
@@ -75,13 +69,11 @@ if &term =~ '256color'
 endif
 
 if has("gui_running")
-    set bg=dark
+    set bg=light
     set guioptions=c
     let g:hybrid_custom_term_colors = 1
     colorscheme hybrid
-else
-    set bg=dark
-    colorscheme hybrid
+    colorscheme default
 endif
 
 """"""""""
@@ -128,6 +120,7 @@ set colorcolumn=80
 """""""""""""""""""""
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
+noremap <Space>/ :nohlsearch<CR>
 
 """""""""""""""""""
 "  Wrap settings  "
@@ -138,7 +131,7 @@ set formatoptions+=t
 """""""""""""""""""
 "  Easier leader  "
 """""""""""""""""""
-nmap <Space> <leader>
+" nmap <Space> <leader>
 
 
 """"""""""""""
@@ -239,7 +232,6 @@ nnoremap <silent> <SID>FZFBuffer :call fzf#run({
 \ })<CR>
 
 nmap <silent> <C-b> <SID>FZFBuffer
-nmap <silent> <space><space> <SID>FZFBuffer
 
 """"""""""""
 "  FZFMRU  "
@@ -257,12 +249,33 @@ nnoremap <silent> <C-f> :FZFMru<cr>
 """""""""""""""
 "  Lightline  "
 """""""""""""""
-set laststatus=2
-if has("gui_running")
-  let g:lightline = {'colorscheme': 'jellybeans'}
-else
-  let g:lightline = {'colorscheme': 'jellybeans'}
-endif
+" if has("gui_running")
+"   let g:lightline = {'colorscheme': 'jellybeans'}
+" else
+"   let g:lightline = {'colorscheme': 'jellybeans'}
+" endif
+
+set statusline=
+set statusline+=\[#%n]                                  "buffernr
+set statusline+=\ %<%F\                                "File+path
+set statusline+=\ %y\                                  "FileType
+set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
+set statusline+=\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
+set statusline+=\ %{&ff}\                              "FileFormat (dos/unix..) 
+set statusline+=\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
+set statusline+=\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
+set statusline+=\ col:%03c\                            "Colnr
+set statusline+=\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+
+function! HighlightSearch()
+  if &hls
+    return 'H'
+  else
+    return ''
+  endif
+endfunction
+
+
 
 """""""""""""""
 "  Ultisnips  "
@@ -292,14 +305,6 @@ let g:tex_fold_enabled=0
 "  LaTeX/AucTeX  "
 """"""""""""""""""
 
-"""" I got rid of auto-pairs
-" let g:tex_flavor="latex"
-" augroup filetype_tex
-"     autocmd!
-"     autocmd FileType tex :let b:AutoPairs = g:AutoPairs
-"     autocmd FileType tex :call extend(b:AutoPairs, {"$":"$"})
-" augroup END
-
 """""""""""""""
 "  Vim-Sneak  "
 """""""""""""""
@@ -311,30 +316,3 @@ let g:sneak#streak = 1
 let g:syntastic_mode_map = { "mode": "active",
                             \ "active_filetypes": [],
                             \ "passive_filetypes": ["tex", "latex"] }
-"""""""""""""""""""
-"  incsearch.vim  "
-"""""""""""""""""""
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
-map N  <Plug>(incsearch-nohl)<Plug>(anzu-N-with-echo)
-map *  <Plug>(incsearch-nohl)<Plug>(anzu-star-with-echo)
-map #  <Plug>(incsearch-nohl)<Plug>(anzu-sharp-with-echo)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-
-""""""""""""""
-"  anzu.vim  "
-""""""""""""""
-set statusline=%{anzu#search_status()}
-
-"""""""""""""""
-"  vim-slime  "
-"""""""""""""""
-let g:slime_target = "tmux"
-let g:slime_paste_file = "$HOME/.slime_paste"
-
