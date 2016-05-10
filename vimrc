@@ -8,9 +8,6 @@ call plug#begin('~/.vim/plugged')
 """""""""""""
 Plug 'tpope/vim-fugitive'
 Plug 'SirVer/ultisnips'
-Plug 'd11wtq/tomorrow-theme-vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'chriskempson/base16-vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-sensible'
@@ -21,24 +18,15 @@ Plug 'scrooloose/syntastic'
 Plug 'dbakker/vim-lint'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'danro/rename.vim'
-Plug 'jpo/vim-railscasts-theme'
-Plug 'altercation/vim-colors-solarized'
-Plug 'w0ng/vim-hybrid'
-Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-visualstar'
 Plug 'dag/vim2hs'
-Plug 'tpope/vim-vividchalk'
 Plug 'dogrover/vim-pentadactyl'
 Plug 'tpope/vim-unimpaired'
-Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'Konfekt/FastFold'
 Plug 'JuliaLang/julia-vim'
-Plug 'whatyouhide/vim-gotham'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-dispatch'
-Plug 'freeo/vim-kalisi'
-Plug 'mbbill/desertEx'
 Plug 'RyanMcG/vim-j'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install'  }
 Plug 'vim-scripts/mom.vim'
@@ -47,7 +35,6 @@ filetype plugin indent on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 call plug#end()
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               General Settings                               "
@@ -61,6 +48,11 @@ set belloff=all
 """"""""""""
 let base16colorspace=256  " Access colors present in 256 colorspace
 syn on
+
+if has("termguicolors") && !has("gui_running")
+  set termguicolors
+endif
+
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
   " render properly when inside 256-color tmux and GNU screen.
@@ -72,7 +64,6 @@ if has("gui_running")
     set bg=light
     set guioptions=c
     let g:hybrid_custom_term_colors = 1
-    colorscheme hybrid
     colorscheme default
 endif
 
@@ -139,6 +130,36 @@ set formatoptions+=t
 """"""""""""""
 set nofoldenable
 
+"""""""""""""""""
+"  status line  "
+"""""""""""""""""
+set statusline=
+set statusline+=\[#%n]                                  "buffernr
+set statusline+=\ %<%F\                                "File+path
+set statusline+=\ %y\                                  "FileType
+set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
+set statusline+=\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
+set statusline+=\ %{&ff}\                              "FileFormat (dos/unix..) 
+set statusline+=\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
+set statusline+=\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
+set statusline+=\ col:%03c\                            "Colnr
+set statusline+=\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+
+function! HighlightSearch()
+  if &hls
+    return 'H'
+  else
+    return ''
+  endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            Moving Around Windows                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <C-Down> <C-w>w
+nnoremap <C-Up> <C-w>W
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -196,15 +217,6 @@ cnoremap <M-f> <S-Right>
 """"""""""""""
 nnoremap <F5> :UndotreeToggle<cr>
 
-""""""""""""
-"  Ctrl-P  "
-""""""""""""
-" nnoremap <C-t> :CtrlPBuffer<cr>
-" nnoremap <Space>p :CtrlP<cr>
-" nnoremap <Space>r :CtrlPMRUFiles<cr>
-" nnoremap <Space>t :CtrlPBuffer<cr>
-" nnoremap <Space>b :CtrlPBuffer<cr>
-
 """""""""
 "  FZF  "
 """""""""
@@ -245,38 +257,6 @@ command! FZFMru call fzf#run({
 
 nnoremap <silent> <C-f> :FZFMru<cr>
 
-
-"""""""""""""""
-"  Lightline  "
-"""""""""""""""
-" if has("gui_running")
-"   let g:lightline = {'colorscheme': 'jellybeans'}
-" else
-"   let g:lightline = {'colorscheme': 'jellybeans'}
-" endif
-
-set statusline=
-set statusline+=\[#%n]                                  "buffernr
-set statusline+=\ %<%F\                                "File+path
-set statusline+=\ %y\                                  "FileType
-set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
-set statusline+=\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
-set statusline+=\ %{&ff}\                              "FileFormat (dos/unix..) 
-set statusline+=\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
-set statusline+=\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
-set statusline+=\ col:%03c\                            "Colnr
-set statusline+=\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
-
-function! HighlightSearch()
-  if &hls
-    return 'H'
-  else
-    return ''
-  endif
-endfunction
-
-
-
 """""""""""""""
 "  Ultisnips  "
 """""""""""""""
@@ -301,10 +281,6 @@ nmap <Leader>a <Plug>(EasyAlign)
 set foldmethod=manual
 let g:tex_fold_enabled=0
 
-""""""""""""""""""
-"  LaTeX/AucTeX  "
-""""""""""""""""""
-
 """""""""""""""
 "  Vim-Sneak  "
 """""""""""""""
@@ -315,4 +291,4 @@ let g:sneak#streak = 1
 """""""""""""""
 let g:syntastic_mode_map = { "mode": "active",
                             \ "active_filetypes": [],
-                            \ "passive_filetypes": ["tex", "latex"] }
+                            \ "passive_filetypes": ["tex", "latex", "R"] }
