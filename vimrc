@@ -20,6 +20,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/vim-easy-align'
 
+Plug 'rust-lang/rust.vim'
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 call plug#end()
@@ -59,7 +60,12 @@ endif
 "  Font  "
 """"""""""
 if has("gui_running")
-  set guifont=Courier\ Screenplay:h14
+  if has("macunix")
+    set guifont=Courier\ Screenplay:h14
+  endif
+  if has("unix")
+    set guifont=Courier\ Screenplay\ 11
+  endif
 endif
 
 """"""""""""""""""""""""""
