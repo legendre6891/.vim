@@ -4,9 +4,9 @@
 
 call plug#begin('~/.vim/plugged')
 
-"""""""""""""
-"  Plugins  "
-"""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 Syntax Files                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sensible'
@@ -19,6 +19,11 @@ Plug 'thinca/vim-visualstar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/vim-easy-align'
+
+""""""""""""""""""
+"  syntax files  "
+""""""""""""""""""
+Plug 'keith/tmux.vim'
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -123,7 +128,7 @@ set nofoldenable
 "  status line  "
 """""""""""""""""
 set statusline=
-set statusline+=\[#%n]                                  "buffernr
+set statusline+=\[#%n]                                 "buffernr
 set statusline+=\ %<%F\                                "File+path
 set statusline+=\ %y\                                  "FileType
 set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
