@@ -24,6 +24,7 @@ Plug 'junegunn/vim-easy-align'
 "  syntax files  "
 """"""""""""""""""
 Plug 'keith/tmux.vim'
+Plug 'rust-lang/rust.vim'
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -64,7 +65,12 @@ endif
 "  Font  "
 """"""""""
 if has("gui_running")
-  set guifont=Courier\ Screenplay:h14
+  if has("macunix")
+    set guifont=Courier\ Screenplay:h14
+  endif
+  if has("unix")
+    set guifont=Courier\ Screenplay\ 11
+  endif
 endif
 
 """"""""""""""""""""""""""
