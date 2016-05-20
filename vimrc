@@ -13,7 +13,6 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'ntpeters/vim-better-whitespace'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -41,7 +40,6 @@ set belloff=all
 "  Colors  "
 """"""""""""
 let base16colorspace=256  " Access colors present in 256 colorspace
-syn on
 
 if has("termguicolors") && !has("gui_running")
   set termguicolors
@@ -55,10 +53,12 @@ if &term =~ '256color'
 endif
 
 if has("gui_running")
-    set bg=light
     set guioptions=c
-    let g:hybrid_custom_term_colors = 1
-    colorscheme default
+    colorscheme professional
+    syntax off
+else
+    colorscheme professional
+    syntax off
 endif
 
 """"""""""
@@ -66,12 +66,12 @@ endif
 """"""""""
 if has("gui_running")
   if has("macunix")
-    set guifont=Courier\ Screenplay:h14
-  endif
-  if has("unix")
+    set guifont=mononoki:h14
+  elseif has("unix")
     set guifont=Courier\ Screenplay\ 11
   endif
 endif
+
 
 """"""""""""""""""""""""""
 "  Indentation Settings  "
@@ -101,10 +101,23 @@ set softtabstop=2   " number of spaces per tab when inserting
 set expandtab       " substitute spaces for tabs
 
 
+set list
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+
+
+""""""""""
+"  size  "
+""""""""""
+if has("gui_running")
+  set lines=35
+  set columns=87
+endif
+
+
 """""""""""""""""
 "  colorcolumn  "
 """""""""""""""""
-set colorcolumn=80
+" set colorcolumn=80
 
 """""""""""""""""""""
 "  Search settings  "
@@ -162,6 +175,12 @@ nnoremap <C-Down> <C-w>w
 nnoremap <C-Up> <C-w>W
 
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             Convenience Mappings                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h').'/' : '%%'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -194,8 +213,8 @@ nnoremap z<Space> za
 """""""""""""""""""
 "  Easier splits  "
 """""""""""""""""""
-nnoremap ss :sp<cr>
-nnoremap sv :vsp<cr>
+nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
+nnoremap <expr><silent> _  !v:count ? "<C-W>s<C-W><Down>"  : '_' 
 
 
 """""""""""""""""""""""""""""""""""""""""""""
@@ -221,18 +240,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
-let g:fzf_action = {
-  \ 'ctrl-m': 'e',
-  \ 'ctrl-t': 'tabedit',
-  \ 'alt-j':  'botright split',
-  \ 'alt-k':  'topleft split',
-  \ 'alt-h':  'vertical topleft split',
-  \ 'alt-l':  'vertical botright split' }
-
-
-
 """""""""""""""
 "  EasyAlign  "
 """""""""""""""
 xmap ga <Plug>(EasyAlign)
-
