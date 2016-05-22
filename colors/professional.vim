@@ -23,10 +23,10 @@ if exists("syntax_on")
 endif
 let g:colors_name="professional"
 
-hi Normal   guifg=black	 guibg=#ffffdd 
-hi Statusline    gui=none guibg=#006666 guifg=#ffffff
-hi VertSplit    gui=none guibg=#006666 guifg=#ffffff
-hi StatuslineNC  gui=none guibg=#666633 guifg=#ffffff
+hi Normal         guifg=black     guibg=#ffffdd 
+hi Statusline     gui=none        guibg=#006666 guifg=#ffffff
+hi VertSplit      gui=none        guibg=#006666 guifg=#ffffff
+hi StatuslineNC   gui=none        guibg=#666633 guifg=#ffffff
 
 hi Title    guifg=black	 guibg=white gui=BOLD
 hi lCursor  guibg=Cyan   guifg=NONE
@@ -39,7 +39,7 @@ hi Operator   guifg=#ff0000
 
 hi Identifier guifg=#339900 gui=NONE
 
-hi Statement	 guifg=orange gui=NONE
+hi Statement     guifg=orange  gui=NONE
 hi TypeDef       guifg=#c000c8 gui=NONE
 hi Type          guifg=#0000c8 gui=NONE
 hi Boolean       guifg=#0000aa gui=NONE
@@ -56,6 +56,6 @@ hi Keyword       guifg=#ff8088 gui=NONE
 hi Search        gui=NONE guibg=#ffff00
 "guibg=#339900
 hi IncSearch     gui=NONE guifg=#ffff00 guibg=#990000
-hi Conditional   gui=none guifg=#660000 guibg=#ffffff
-hi browseDirectory  gui=none guifg=#660000 guibg=#ffffff
+hi Conditional   gui=none guifg=#660000
+hi browseDirectory  gui=none guifg=#660000
 

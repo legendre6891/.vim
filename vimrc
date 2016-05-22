@@ -15,9 +15,12 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'godlygeek/csapprox'
+Plug 'christoomey/vim-tmux-navigator'
 
 """"""""""""""""""
 "  syntax files  "
@@ -41,9 +44,9 @@ set belloff=all
 """"""""""""
 let base16colorspace=256  " Access colors present in 256 colorspace
 
-if has("termguicolors") && !has("gui_running")
-  set termguicolors
-endif
+" if has("termguicolors") && !has("gui_running")
+"   set termguicolors
+" endif
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -174,6 +177,11 @@ endfunction
 nnoremap <C-Down> <C-w>w
 nnoremap <C-Up> <C-w>W
 
+"""""""""""""""""""""""
+"  Buffer Navigation  "
+"""""""""""""""""""""""
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gB :ls<CR>:sbuffer<Space>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -244,3 +252,61 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "  EasyAlign  "
 """""""""""""""
 xmap ga <Plug>(EasyAlign)
+
+""""""""""""""""""""
+"  Tmux Navigator  "
+""""""""""""""""""""
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <Right> :TmuxNavigateRight<cr>
+
+
+"""""""""
+"  FZF  "
+"""""""""
+nnoremap <silent> <C-p> :FZF<cr>
+
+"""""""""""""""
+"  FZFBUFFER  "
+"""""""""""""""
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <SID>FZFBuffer :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
+nmap <silent> <C-b> <SID>FZFBuffer
+nmap <silent> <space><space> <SID>FZFBuffer
+
+""""""""""""
+"  FZFMRU  "
+""""""""""""
+command! FZFMru call fzf#run({
+            \'source': v:oldfiles,
+            \'sink' : 'e ',
+            \'options' : '+m',
+            \   'down':   '33%'
+            \})
+
+nnoremap <silent> <C-f> :FZFMru<cr>
+
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
