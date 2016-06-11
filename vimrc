@@ -37,7 +37,9 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set visualbell t_vb=
 set novisualbell
-set belloff=all
+if has("belloff")
+  set belloff=all
+endif
 
 """"""""""""
 "  Colors  "
