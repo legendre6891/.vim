@@ -73,7 +73,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=ProFontWindows:h13
   elseif has("unix")
-    set guifont=Courier\ Screenplay\ 11
+    set guifont=PragmataPro\ Mono\ 12
   endif
 endif
 
@@ -293,7 +293,6 @@ nnoremap <silent> <SID>FZFBuffer :call fzf#run({
 \ })<CR>
 
 nmap <silent> <C-b> <SID>FZFBuffer
-nmap <silent> <space><space> <SID>FZFBuffer
 
 """"""""""""
 "  FZFMRU  "
