@@ -71,7 +71,7 @@ endif
 """"""""""
 if has("gui_running")
   if has("macunix")
-    set guifont=mononoki:h14
+    set guifont=ProFontWindows:h13
   elseif has("unix")
     set guifont=Courier\ Screenplay\ 11
   endif
