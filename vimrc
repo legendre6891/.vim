@@ -19,7 +19,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'jlanzarotta/bufexplorer'
-Plug 'godlygeek/csapprox'
 Plug 'christoomey/vim-tmux-navigator'
 
 """"""""""""""""""
@@ -60,10 +59,8 @@ endif
 if has("gui_running")
     set guioptions=c
     colorscheme professional
-    syntax off
 else
     colorscheme professional
-    syntax off
 endif
 
 """"""""""
@@ -73,7 +70,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=ProFontWindows:h13
   elseif has("unix")
-    set guifont=PragmataPro\ Mono\ 12
+    set guifont=ProFontIIx\ 8
   endif
 endif
 
@@ -106,17 +103,17 @@ set softtabstop=2   " number of spaces per tab when inserting
 set expandtab       " substitute spaces for tabs
 
 
-set list
+set nolist
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 
 
 """"""""""
 "  size  "
 """"""""""
-if has("gui_running")
-  set lines=35
-  set columns=87
-endif
+" if has("gui_running")
+"   set lines=35
+"   set columns=87
+" endif
 
 
 """""""""""""""""
