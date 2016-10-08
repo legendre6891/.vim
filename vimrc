@@ -20,6 +20,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'romainl/Apprentice'
+Plug 'nielsmadan/harlequin'
 
 """"""""""""""""""
 "  syntax files  "
@@ -58,9 +60,9 @@ endif
 
 if has("gui_running")
     set guioptions=c
-    colorscheme professional
+    colorscheme harlequin
 else
-    colorscheme professional
+    colorscheme harlequin
 endif
 
 """"""""""
@@ -70,7 +72,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=ProFontWindows:h13
   elseif has("unix")
-    set guifont=ProFontIIx\ 8
+    set guifont=ProFontIIx\ 7
   endif
 endif
 
