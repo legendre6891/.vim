@@ -21,6 +21,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'godlygeek/csapprox'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'metakirby5/codi.vim'
+Plug 'chriskempson/tomorrow-theme'
 
 """"""""""""""""""
 "  syntax files  "
