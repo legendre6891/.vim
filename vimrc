@@ -11,6 +11,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
+Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-gtfo'
+Plug 'wincent/command-t', {
+  \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
+  \ }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'danro/rename.vim'
@@ -22,8 +27,12 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'metakirby5/codi.vim'
 Plug 'chriskempson/tomorrow-theme'
+Plug 'chriskempson/base16-vim'
 Plug 'romainl/Apprentice'
 Plug 'nielsmadan/harlequin'
+Plug 'joshdick/onedark.vim'
+Plug 'shinokada/dragvisuals.vim'
+" Plug 'zirrostig/vim-schlepp'
 
 """"""""""""""""""
 "  syntax files  "
@@ -62,9 +71,9 @@ endif
 
 if has("gui_running")
     set guioptions=c
-    colorscheme harlequin
+    colorscheme apprentice
 else
-    colorscheme harlequin
+    colorscheme apprentice
 endif
 
 """"""""""
@@ -72,7 +81,7 @@ endif
 """"""""""
 if has("gui_running")
   if has("macunix")
-    set guifont=ProFontWindows:h13
+    set guifont=PragmataPro:h14
   elseif has("unix")
     set guifont=ProFontIIx\ 7
   endif
@@ -141,7 +150,7 @@ set formatoptions+=t
 """""""""""""""""""
 "  Easier leader  "
 """""""""""""""""""
-" nmap <Space> <leader>
+nmap <Space> <leader>
 
 
 """"""""""""""
@@ -196,6 +205,18 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h').'/' : '%%'
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
+""""""""""""""""""""
+"  Tmux Navigator  "
+""""""""""""""""""""
+
+" let g:tmux_navigator_no_mappings = 1
+
+" nnoremap <silent> <Left> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <Down> :TmuxNavigateDown<cr>
+" nnoremap <silent> <Up> :TmuxNavigateUp<cr>
+" nnoremap <silent> <Right> :TmuxNavigateRight<cr>
+
 """"""""""""""""""""""""""""
 "  macvim-specific `hack`  "
 """"""""""""""""""""""""""""
@@ -216,8 +237,11 @@ end
 inoremap jk <Esc>
 noremap Q :q<CR>
 noremap gQ :q!<CR>
-nmap <silent> <leader>ev :vsp $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> \ev :vsp $MYVIMRC<CR>
+nmap <silent> \sv :so $MYVIMRC<CR>
+
+nnoremap <silent> <space><space> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+
 
 nnoremap z<Space> za
 
@@ -255,16 +279,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "  EasyAlign  "
 """""""""""""""
 xmap ga <Plug>(EasyAlign)
-
-""""""""""""""""""""
-"  Tmux Navigator  "
-""""""""""""""""""""
-let g:tmux_navigator_no_mappings = 1
-
-nnoremap <silent> <Left> :TmuxNavigateLeft<cr>
-nnoremap <silent> <Down> :TmuxNavigateDown<cr>
-nnoremap <silent> <Up> :TmuxNavigateUp<cr>
-nnoremap <silent> <Right> :TmuxNavigateRight<cr>
 
 
 """""""""
@@ -312,3 +326,26 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+
+"""""""""""""
+"  dirvish  "
+"""""""""""""
+nmap - <Plug>(dirvish_vsplit_up)
+
+
+
+""""""""""
+"  GTFO  "
+""""""""""
+let g:gtfo#terminals = { 'mac' : 'iterm', 'unix': 'st -d' }
+
+
+""""""""""""""""""
+"  drag visuals  "
+""""""""""""""""""
+" vmap <unique> <up>    <Plug>SchleppUp
+" vmap <unique> <down>  <Plug>SchleppDown
+" vmap <unique> <left>  <Plug>SchleppLeft
+" vmap <unique> <right> <Plug>SchleppRight
+
+" let g:Schlepp#trimWS = 0
