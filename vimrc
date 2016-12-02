@@ -35,11 +35,14 @@ Plug 'nielsmadan/harlequin'
 Plug 'joshdick/onedark.vim'
 Plug 'shinokada/dragvisuals.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/denite.nvim'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimfiler.vim'
-Plug 'jnurmine/Zenburn'
 
+if has("python3")
+  Plug 'Shougo/denite.nvim'
+  Plug 'Shougo/unite.vim'
+  Plug 'Shougo/vimfiler.vim'
+endif
+
+Plug 'jnurmine/Zenburn'
 Plug 'legendre6891/yalp'
 " Plug 'zirrostig/vim-schlepp'
 
@@ -342,7 +345,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""
 "  VIMFILER  "
 """""""""""""
-nnoremap - :VimFilerExplorer<CR>
+if has("python3")
+  nnoremap - :VimFilerExplorer<CR>
+endif
 
 
 
