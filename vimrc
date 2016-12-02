@@ -11,13 +11,15 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-dispatch'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'wincent/command-t', {
   \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
   \ }
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -32,6 +34,13 @@ Plug 'romainl/Apprentice'
 Plug 'nielsmadan/harlequin'
 Plug 'joshdick/onedark.vim'
 Plug 'shinokada/dragvisuals.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Shougo/denite.nvim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'jnurmine/Zenburn'
+
+Plug 'legendre6891/yalp'
 " Plug 'zirrostig/vim-schlepp'
 
 """"""""""""""""""
@@ -271,9 +280,12 @@ cnoremap <M-f> <S-Right>
 """""""""""""""
 "  Ultisnips  "
 """""""""""""""
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<TAB>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]
+let g:UltiSnipsSnippetsDir=$HOME . "/.vim/my_snippets"
 
 """""""""""""""
 "  EasyAlign  "
@@ -328,9 +340,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 
 """""""""""""
-"  dirvish  "
+"  VIMFILER  "
 """""""""""""
-nmap - <Plug>(dirvish_vsplit_up)
+nnoremap - :VimFilerExplorer<CR>
 
 
 
