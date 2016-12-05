@@ -14,32 +14,36 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-dispatch'
+
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
+
 Plug 'wincent/command-t', {
   \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
   \ }
+
 Plug 'SirVer/ultisnips'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'jlanzarotta/bufexplorer'
+
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'metakirby5/codi.vim'
 Plug 'chriskempson/tomorrow-theme'
 Plug 'chriskempson/base16-vim'
 Plug 'romainl/Apprentice'
 Plug 'nielsmadan/harlequin'
 Plug 'joshdick/onedark.vim'
-Plug 'shinokada/dragvisuals.vim'
 
 if has("python3")
   Plug 'Shougo/denite.nvim'
   Plug 'Shougo/unite.vim'
   Plug 'Shougo/vimfiler.vim'
 endif
+
+Plug 'sjl/clam.vim'
+
 
 Plug 'jnurmine/Zenburn'
 Plug 'legendre6891/yalp'
@@ -292,21 +296,6 @@ let g:UltiSnipsSnippetsDir=$HOME . "/.vim/my_snippets"
 let g:UltiSnipsNoPythonWarning = 1
 
 
-let g:ulti_expand_res = 0 "default value, just set once
-function! Ulti_Expand()
-  call UltiSnips#ExpandSnippet()
-  return g:ulti_expand_res
-endfunction
-
-function! SendBackspace()
-  call feedkeys("\<BS>")
-endfunction
-
-
-augroup vimrc
-  autocmd!
-  au FileType tex inoremap <buffer> ,, <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
-augroup END
 
 
 """""""""""""""
@@ -375,5 +364,26 @@ endif
 """"""""""
 let g:gtfo#terminals = { 'mac' : 'iterm', 'unix': 'st -d' }
 
+
+
+""""""""""
+"  GTFO  "
+""""""""""
+" LATEX
 let g:tex_flavor="latex"
 
+let g:ulti_expand_res = 0 "default value, just set once
+function! Ulti_Expand()
+  call UltiSnips#ExpandSnippet()
+  return g:ulti_expand_res
+endfunction
+
+function! SendBackspace()
+  call feedkeys("\<BS>")
+endfunction
+
+
+augroup vimrc
+  autocmd!
+  au FileType tex inoremap <buffer> ,, <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
+augroup END
