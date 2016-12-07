@@ -98,7 +98,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=PragmataPro:h14
   elseif has("unix")
-    set guifont=ProFontIIx\ 7
+    set guifont=Fira\ Code\ 10
   endif
 endif
 
@@ -296,6 +296,7 @@ let g:UltiSnipsSnippetsDir=$HOME . "/.vim/my_snippets"
 let g:UltiSnipsNoPythonWarning = 1
 
 
+nmap <silent> \ee :UltiSnipsEdit<CR>
 
 
 """""""""""""""
