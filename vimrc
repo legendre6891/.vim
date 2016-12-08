@@ -221,10 +221,12 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h').'/' : '%%'
 
+
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 """"""""""""""""""""
 "  Tmux Navigator  "
@@ -300,7 +302,6 @@ let g:UltiSnipsSnippetsDir=$HOME . "/.vim/my_snippets"
 
 let g:UltiSnipsNoPythonWarning = 1
 
-
 nmap <silent> \ee :UltiSnipsEdit<CR>
 
 
@@ -314,6 +315,7 @@ xmap ga <Plug>(EasyAlign)
 "  FZF  "
 """""""""
 nnoremap <silent> <C-p> :FZF<cr>
+
 
 """""""""""""""
 "  FZFBUFFER  "
@@ -337,6 +339,7 @@ nnoremap <silent> <SID>FZFBuffer :call fzf#run({
 \ })<CR>
 
 nmap <silent> <C-b> <SID>FZFBuffer
+
 
 """"""""""""
 "  FZFMRU  "
@@ -363,6 +366,10 @@ if has("python3")
   nnoremap - :VimFilerExplorer<CR>
 endif
 
+
+
+"""" COMMAND-t
+let g:CommandTFileScanner="watchman"
 
 
 """"""""""
