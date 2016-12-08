@@ -1,0 +1,255 @@
+snippet minimal "LaTeX template" b
+\\documentclass[11pt]{article}
+\\usepackage[utf8]{inputenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FONTS / MATH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage{tgtermes}
+\\usepackage{inconsolata}
+\\usepackage[subscriptcorrection, mtpcal]{mtpro2}
+\\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage{amsthm}
+\\usepackage{mathtools}
+
+\\theoremstyle{definition}
+\\newtheorem{theorem}{Theorem}
+\\newtheorem*{theorem*}{Theorem}
+\\newtheorem*{claim*}{Claim}
+\\newtheorem{lemma}[theorem]{Lemma}
+\\newtheorem{prop}[theorem]{Proposition}
+\\newtheorem{proposition}[theorem]{Proposition}
+\\newtheorem{corollary}[theorem]{Corollary}
+\\newtheorem{claim}[theorem]{Claim}
+\\newtheorem{assumption}[theorem]{Assumption}
+\\newtheorem{definition}[theorem]{Definition}
+\\newtheorem*{notation}{Notation}
+\\newtheorem{conjecture}[theorem]{Conjecture}
+\\newtheorem{example}[theorem]{Example}
+\\newtheorem*{answer}{Final Answer}
+\\newtheorem*{wts}{Want To Show}
+
+\\theoremstyle{remark}
+\\newtheorem*{remark}{Remark}
+\\newtheorem*{note}{Note}
+
+\\theoremstyle{definition} % just in case the style had changed
+\\newcommand{\\thistheoremname}{}
+\\newtheorem*{genericthm}{\\thistheoremname}
+\\newenvironment{namedthm}[1]
+  {\\renewcommand{\\thistheoremname}{\\fontfamily{lmss}\\fontseries{bx}\\selectfont#1}%
+   \\begin{genericthm}}
+  {\\end{genericthm}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MARGINS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage[margin=0.75in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage[compact]{titlesec}
+\\titleformat*{\\section}{\\fontfamily{lmss}\\selectfont\\Large\\bfseries}
+\\titleformat*{\\subsection}{\\fontfamily{lmss}\\selectfont\\large\\bfseries}
+\\titleformat*{\\subsubsection}{\\fontfamily{lmss}\\selectfont\\bfseries}
+\\setcounter{secnumdepth}{-2}
+\\def\\sectionfont{\\fontfamily{lmss}\\selectfont\\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TikZ
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage{tikz}
+\\usetikzlibrary{calc,matrix}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% UTILITIES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage{enumitem}
+\\setlist[description]{font=\\normalfont\\scshape\\bfseries\\boldmath}
+
+\\usepackage{graphicx}
+
+\\makeatletter
+\\@addtoreset{equation}{section}
+\\makeatother
+\\renewcommand\\theequation{\\oldstylenums{\\arabic{equation}}}
+
+\\usepackage[final]{microtype}
+
+\\usepackage[hang,flushmargin,symbol,perpage]{footmisc} 
+\\setfnsymbol{wiley}
+
+\\usepackage[skins,theorems]{tcolorbox}
+\\tcbset{highlight math style={enhanced, colframe=black,colback=gray!20,arc=0pt,boxrule=1pt}}
+
+\\usepackage[normalem]{ulem}
+\\usepackage{stackengine}
+\\stackMath
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\usepackage[labelfont=bf,format=plain,labelsep=period,width=.85\\columnwidth]{caption}
+\\usepackage{booktabs}
+\\usepackage[section]{placeins}
+\\usepackage{float}
+
+\\newcounter{EquationCounter}
+\\newcounter{FigureCounter}
+\\newcounter{TableCounter}
+
+\\newcommand{\\Equation}{
+\\def\\figurename{Equation}
+\\setcounter{figure}{\\value{EquationCounter}}
+\\stepcounter{EquationCounter}
+}
+
+\\newcommand{\\Figure}{
+  \\def\\figurename{Figure}
+\\setcounter{figure}{\\value{FigureCounter}}
+\\stepcounter{FigureCounter}
+}
+
+\\newcommand{\\Table}{
+  \\def\\figurename{Table}
+\\setcounter{figure}{\\value{TableCounter}}
+\\stepcounter{TableCounter}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% OPERATORS
+%%%%%%%%%%%%%%%%%%%%
+
+\\let\\P\\relax
+
+\\DeclareMathOperator{\\E}{\\mathbf{E}}
+\\DeclareMathOperator{\\P}{\\mathbf{P}}
+\\DeclareMathOperator{\\Q}{\\mathbf{Q}}
+\\DeclareMathOperator{\\R}{\\mathbf{R}}
+\\DeclareMathOperator{\\Z}{\\mathbf{Z}}
+
+\\newcommand{\\Pto}{\\;\\xrightarrow[\\phantom{n\\to\\infty}]{\\P}\\;}
+\\newcommand{\\Dto}{\\;\\xRightarrow{\\ \\ \\rm dist.\\ \\ }\\;}
+\\DeclareMathOperator{\\Bias}{Bias}
+\\DeclareMathOperator{\\CDF}{\\textsc{CDF}}
+\\DeclareMathOperator{\\Cov}{\\mathbf{Cov}}
+\\DeclareMathOperator{\\MSE}{MSE}
+\\DeclareMathOperator{\\Prob}{\\mathbf{Prob}}
+\\DeclareMathOperator{\\Var}{\\mathbf{Var}}
+\\DeclareMathOperator*{\\plim}{plim}
+\\newcommand\\given[1][]{\\:#1\\vert\\:}
+
+\\DeclareMathOperator{\\Bernoulli}{\\textsc{B}}
+\\DeclareMathOperator{\\Binomial}{\\mathsf{Binomial}}
+\\DeclareMathOperator{\\GammaP}{\\mathsf{Gamma}}
+\\DeclareMathOperator{\\IID}{\\mathbin{\\overset{\\textsc{IID}}{\\sim}}}
+\\DeclareMathOperator{\\Normal}{\\textsc{Normal}}
+\\DeclareMathOperator{\\Pareto}{\\mathsf{Pareto}}
+\\DeclareMathOperator{\\Poisson}{\\textsc{Pois}}
+\\DeclareMathOperator{\\Pois}{\\mathsf{Pois}}
+\\DeclareMathOperator{\\Unif}{\\textsc{Unif}}
+
+\\DeclareMathOperator*{\\maximize}{maximize\\,}
+\\DeclareMathOperator*{\\minimize}{minimize\\,}
+\\DeclareMathOperator*{\\argmin}{arg\\,min}
+\\DeclareMathOperator*{\\argmax}{arg\\,max}
+
+\\DeclareMathOperator{\\im}{im}
+\\DeclareMathOperator{\\id}{id}
+\\DeclareMathOperator{\\Ch}{Ch}
+
+\\DeclareMathOperator{\\diag}{diag}
+\\DeclareMathOperator{\\tr}{tr}
+
+
+\\makeatletter
+\\newcommand*{\\indep}{%
+  \\mathbin{%
+    \\mathpalette{\\@indep}{}%
+  }%
+}
+\\newcommand*{\\nindep}{%
+  \\mathbin{%                   % The final symbol is a binary math operator
+    \\mathpalette{\\@indep}{\\not}% \\mathpalette helps for the adaptation
+                               % of the symbol to the different math styles.
+  }%
+}
+\\newcommand*{\\@indep}[2]{%
+  % #1: math style
+  % #2: empty or \\not
+  \\sbox0{$#1\\perp\\m@th$}%        box 0 contains \\perp symbol
+  \\sbox2{$#1=$}%                 box 2 for the height of =
+  \\sbox4{$#1\\vcenter{}$}%        box 4 for the height of the math axis
+  \\rlap{\\copy0}%                 first \\perp
+  \\dimen@=\\dimexpr\\ht2-\\ht4-.2pt\\relax
+      % The equals symbol is centered around the math axis.
+      % The following equations are used to calculate the
+      % right shift of the second \\perp:
+      % [1] ht(equals) - ht(math_axis) = line_width + 0.5 gap
+      % [2] right_shift(second_perp) = line_width + gap
+      % The line width is approximated by the default line width of 0.4pt
+  \\kern\\dimen@
+  {#2}%
+      % {\\not} in case of \\nindep;
+      % the braces convert the relational symbol \\not to an ordinary
+      % math object without additional horizontal spacing.
+  \\kern\\dimen@
+  \\copy0 %                       second \\perp
+} 
+\\makeatother
+
+\\makeatletter
+\\def\\imod#1{\\allowbreak\\mkern10mu({\\operator@font mod}\\,\\,#1)}
+\\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM DEFS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\def\\Rule{\\medskip\\noindent \\hrule width\\columnwidth\\smallskip}
+\\newcommand\\problemfont[1]{{\\fontfamily{lmss}\\fontseries{bx}\\selectfont#1}}
+
+\\newcommand{\\newproblem}{\\par\\noindent\\rule{\\columnwidth}{0.4pt}\\par}
+\\newcommand{\\problemheader}[1]{\\noindent\\problemfont{#1}\\;}
+\\newcommand{\\problem}[1]{\\newproblem\\problemheader{#1}}
+\\newcommand{\\squash}{\\vglue-15pt}
+
+\\def\\QED {{%        set up
+  \\parfillskip=0pt        % so \\par doesnt push \\square to left
+  \\widowpenalty=10000     % so we dont break the page before \\square
+  \\displaywidowpenalty=10000  % ditto
+  \\finalhyphendemerits=0  % TeXbook exercise 14.32
+ %
+ %                 horizontal
+  \\leavevmode             % \\nobreak means lines not pages
+  \\unskip                 % remove previous space or glue
+  \\nobreak                % don't break lines
+  \\hfil                   % ragged right if we spill over
+  \\penalty50              % discouragement to do so
+  \\hskip.2em              % ensure some space
+  \\null                   % anchor following \\hfill
+  \\hfill                  % push \\square to right
+  $\\square$%              % the end-of-proof mark
+ %
+ %                   vertical
+  \\par}}                  % build paragraph
+
+
+
+
+
+\\begin{document}
+$0
+\\end{document}
+endsnippet
+
