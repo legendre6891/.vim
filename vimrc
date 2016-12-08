@@ -22,6 +22,8 @@ Plug 'wincent/command-t', {
   \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
   \ }
 
+Plug 'chrisbra/Colorizer'
+
 Plug 'SirVer/ultisnips'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
@@ -31,12 +33,16 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-slash'
 
 Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'chriskempson/tomorrow-theme'
 Plug 'chriskempson/base16-vim'
 Plug 'romainl/Apprentice'
 Plug 'nielsmadan/harlequin'
 Plug 'joshdick/onedark.vim'
 Plug 'lifepillar/vim-solarized8'
+Plug 'jnurmine/Zenburn'
+Plug 'fxn/vim-monochrome'
+
 
 if has("python3")
   Plug 'Shougo/denite.nvim'
@@ -45,11 +51,7 @@ if has("python3")
 endif
 
 Plug 'sjl/clam.vim'
-
-Plug 'jnurmine/Zenburn'
-
 Plug 'legendre6891/yalp'
-" Plug 'zirrostig/vim-schlepp'
 
 """"""""""""""""""
 "  syntax files  "
@@ -100,7 +102,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=PragmataPro:h14
   elseif has("unix")
-    set guifont=Fira\ Code\ 10
+    set guifont=Fira\ Code\ 9
   endif
 endif
 
@@ -372,37 +374,39 @@ let g:CommandTFileScanner="watchman"
 """""""""""""""
 "  vim-slash  "
 """""""""""""""
-function! s:blink(times, delay)
-  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
+if has(v:version >= 800)
+  function! s:blink(times, delay)
+    let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
 
-  function! s:blink.tick(_)
-    let self.ticks -= 1
-    let active = self == s:blink && self.ticks > 0
+    function! s:blink.tick(_)
+      let self.ticks -= 1
+      let active = self == s:blink && self.ticks > 0
 
-    if !self.clear() && active && &hlsearch
-      let [line, col] = [line('.'), col('.')]
-      let w:blink_id = matchadd('IncSearch',
-            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
-    endif
-    if active
-      call timer_start(self.delay, self.tick)
-    endif
+      if !self.clear() && active && &hlsearch
+        let [line, col] = [line('.'), col('.')]
+        let w:blink_id = matchadd('IncSearch',
+              \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
+      endif
+      if active
+        call timer_start(self.delay, self.tick)
+      endif
+    endfunction
+
+    function! s:blink.clear()
+      if exists('w:blink_id')
+        call matchdelete(w:blink_id)
+        unlet w:blink_id
+        return 1
+      endif
+    endfunction
+
+    call s:blink.clear()
+    call s:blink.tick(0)
+    return ''
   endfunction
 
-  function! s:blink.clear()
-    if exists('w:blink_id')
-      call matchdelete(w:blink_id)
-      unlet w:blink_id
-      return 1
-    endif
-  endfunction
-
-  call s:blink.clear()
-  call s:blink.tick(0)
-  return ''
-endfunction
-
-noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
+  noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
+endif
 
 
 
