@@ -35,6 +35,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'romainl/Apprentice'
 Plug 'nielsmadan/harlequin'
 Plug 'joshdick/onedark.vim'
+Plug 'lifepillar/vim-solarized8'
 
 if has("python3")
   Plug 'Shougo/denite.nvim'
@@ -44,8 +45,8 @@ endif
 
 Plug 'sjl/clam.vim'
 
-
 Plug 'jnurmine/Zenburn'
+
 Plug 'legendre6891/yalp'
 " Plug 'zirrostig/vim-schlepp'
 
@@ -387,3 +388,13 @@ augroup vimrc
   autocmd!
   au FileType tex inoremap <buffer> ,, <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
+
+
+
+
+
+
+
+
+
+
