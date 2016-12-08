@@ -28,6 +28,7 @@ Plug 'thinca/vim-visualstar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-slash'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'chriskempson/tomorrow-theme'
@@ -74,19 +75,15 @@ endif
 """"""""""""
 let base16colorspace=256  " Access colors present in 256 colorspace
 
-" if has("termguicolors") && !has("gui_running")
-"   set termguicolors
-" endif
+if has("termguicolors") && !has("gui_running") && $TMUX  == ""
+  set termguicolors
+endif
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
   " render properly when inside 256-color tmux and GNU screen.
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
-endif
-
-if has("termguicolors")
-  set termguicolors
 endif
 
 if has("gui_running")
@@ -370,6 +367,46 @@ endif
 
 """" COMMAND-t
 let g:CommandTFileScanner="watchman"
+
+
+"""""""""""""""
+"  vim-slash  "
+"""""""""""""""
+function! s:blink(times, delay)
+  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
+
+  function! s:blink.tick(_)
+    let self.ticks -= 1
+    let active = self == s:blink && self.ticks > 0
+
+    if !self.clear() && active && &hlsearch
+      let [line, col] = [line('.'), col('.')]
+      let w:blink_id = matchadd('IncSearch',
+            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
+    endif
+    if active
+      call timer_start(self.delay, self.tick)
+    endif
+  endfunction
+
+  function! s:blink.clear()
+    if exists('w:blink_id')
+      call matchdelete(w:blink_id)
+      unlet w:blink_id
+      return 1
+    endif
+  endfunction
+
+  call s:blink.clear()
+  call s:blink.tick(0)
+  return ''
+endfunction
+
+noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
+
+
+
+
 
 
 """"""""""
