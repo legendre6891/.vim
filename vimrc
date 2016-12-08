@@ -85,6 +85,10 @@ if &term =~ '256color'
   set t_ut=
 endif
 
+if has("termguicolors")
+  set termguicolors
+endif
+
 if has("gui_running")
     set guioptions=c
     colorscheme apprentice
@@ -389,13 +393,4 @@ augroup vimrc
   autocmd!
   au FileType tex inoremap <buffer> ,, <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
-
-
-
-
-
-
-
-
-
 
