@@ -77,9 +77,6 @@ endif
 """"""""""""
 let base16colorspace=256  " Access colors present in 256 colorspace
 
-if has("termguicolors") && !has("gui_running") && $TMUX  == ""
-  set termguicolors
-endif
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -95,6 +92,13 @@ else
     colorscheme apprentice
 endif
 
+if has("termguicolors") && !has("gui_running") && $TMUX  == ""
+  set termguicolors
+endif
+
+if $TMUX != ""
+  colorscheme monochrome
+endif
 """"""""""
 "  Font  "
 """"""""""
@@ -218,7 +222,7 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Convenience Mappings                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h').'/' : '%%'
+cnoremap <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:p:h')).'/' : '%%'
 
 
 
@@ -374,7 +378,7 @@ let g:CommandTFileScanner="watchman"
 """""""""""""""
 "  vim-slash  "
 """""""""""""""
-if has(v:version >= 800)
+if (v:version >= 800)
   function! s:blink(times, delay)
     let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
 
@@ -405,7 +409,11 @@ if has(v:version >= 800)
     return ''
   endfunction
 
-  noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
+  if has("macunix")
+    noremap <expr> <plug>(slash-after) <sid>blink(2, 40) . "zz"
+  elseif has("unix")
+    noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
+  endif
 endif
 
 
