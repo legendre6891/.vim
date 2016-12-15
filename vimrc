@@ -431,17 +431,18 @@ let g:tex_flavor="latex"
 
 let g:ulti_expand_res = 0 "default value, just set once
 function! Ulti_Expand()
-  call UltiSnips#ExpandSnippet()
-  return g:ulti_expand_res
+  call UltiSnips#ExpandSnippetOrJump()
+  return g:ulti_expand_or_jump_res
 endfunction
 
 function! SendBackspace()
   call feedkeys("\<BS>")
+  call feedkeys("\<Plug>JumpJump")
 endfunction
 
 
 augroup vimrc
   autocmd!
-  au FileType tex inoremap <buffer> ,, <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
+  au FileType tex inoremap <buffer> <Tab> <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
 
