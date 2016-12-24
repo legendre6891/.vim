@@ -53,6 +53,13 @@ endif
 Plug 'sjl/clam.vim'
 Plug 'legendre6891/yalp'
 
+Plug 'kana/vim-textobj-user'
+Plug 'zandrmartin/vim-textobj-blanklines'
+Plug 'kana/vim-textobj-entire'
+Plug 'glts/vim-textobj-comment'
+Plug 'kana/vim-textobj-indent'
+
+
 """"""""""""""""""
 "  syntax files  "
 """"""""""""""""""
@@ -446,3 +453,6 @@ augroup vimrc
   au FileType tex inoremap <buffer> <Tab> <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
 
+"""" Spelling
+nnoremap sn ]s
+nnoremap ss 1z=
