@@ -51,13 +51,17 @@ if has("python3")
 endif
 
 Plug 'sjl/clam.vim'
-Plug 'legendre6891/yalp'
+" Plug 'legendre6891/yalp'
+Plug '~/github/yalp'
 
 Plug 'kana/vim-textobj-user'
 Plug 'zandrmartin/vim-textobj-blanklines'
 Plug 'kana/vim-textobj-entire'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
+
+" Plug 'jiangmiao/auto-pairs'
+Plug 'kana/vim-smartinput'
 
 
 """"""""""""""""""
@@ -230,7 +234,7 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 "                             Convenience Mappings                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:p:h')).'/' : '%%'
-
+nnoremap cgt *``cgn
 
 
 
@@ -453,6 +457,13 @@ augroup vimrc
   au FileType tex inoremap <buffer> <Tab> <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
 
+
+augroup yalp
+  autocmd!
+  autocmd BufNewFile,BufRead *.tex setlocal indentexpr&
+augroup END
+
 """" Spelling
 nnoremap sn ]s
+nnoremap sp [s
 nnoremap ss 1z=
