@@ -1,3 +1,5 @@
+let did_install_default_menus = 1
+let did_install_syntax_menu = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Plugin Installation                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -42,6 +44,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'lifepillar/vim-solarized8'
 Plug 'jnurmine/Zenburn'
 Plug 'fxn/vim-monochrome'
+Plug 'w0ng/vim-hybrid'
 
 
 if has("python3")
@@ -59,6 +62,7 @@ Plug 'zandrmartin/vim-textobj-blanklines'
 Plug 'kana/vim-textobj-entire'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
 
 " Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-smartinput'
@@ -108,7 +112,7 @@ if has("termguicolors") && !has("gui_running") && $TMUX  == ""
 endif
 
 if $TMUX != ""
-  colorscheme monochrome
+  colorscheme apprentice
 endif
 """"""""""
 "  Font  "
