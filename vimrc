@@ -45,6 +45,7 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'jnurmine/Zenburn'
 Plug 'fxn/vim-monochrome'
 Plug 'w0ng/vim-hybrid'
+Plug 'zanglg/nova.vim'
 
 
 if has("python3")
