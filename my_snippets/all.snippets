@@ -1,0 +1,231 @@
+# This file contains snippets that are always defined. I personally
+# have snippets for signatures and often needed texts
+
+# sligthly lower priority than everything else since specialized versions
+# should overwrite. The user needs to adjust her priority in her snippets to
+# ~-55 so that other filetypes will still overwrite.
+priority -60
+
+##############
+# NICE BOXES #
+##############
+global !p
+
+"""Helper methods used in UltiSnips snippets."""
+
+import string, vim
+import math
+
+def complete(tab, opts):
+    """
+    get options that start with tab
+
+    :param tab: query string
+    :param opts: list that needs to be completed
+
+    :return: a string that start with tab
+    """
+    msg = "({0})"
+    if tab:
+        opts = [m[len(tab):] for m in opts if m.startswith(tab)]
+    if len(opts) == 1:
+        return opts[0]
+
+    if not len(opts):
+        msg = "{0}"
+    return msg.format("|".join(opts))
+
+def _parse_comments(s):
+    """ Parses vim's comments option to extract comment format """
+    i = iter(s.split(","))
+
+    rv = []
+    try:
+        while True:
+            # get the flags and text of a comment part
+            flags, text = next(i).split(':', 1)
+
+            if len(flags) == 0:
+                rv.append(('OTHER', text, text, text, ""))
+            # parse 3-part comment, but ignore those with O flag
+            elif 's' in flags and 'O' not in flags:
+                ctriple = ["TRIPLE"]
+                indent = ""
+
+                if flags[-1] in string.digits:
+                    indent = " " * int(flags[-1])
+                ctriple.append(text)
+
+                flags, text = next(i).split(':', 1)
+                assert flags[0] == 'm'
+                ctriple.append(text)
+
+                flags, text = next(i).split(':', 1)
+                assert flags[0] == 'e'
+                ctriple.append(text)
+                ctriple.append(indent)
+
+                rv.append(ctriple)
+            elif 'b' in flags:
+                if len(text) == 1:
+                    rv.insert(0, ("SINGLE_CHAR", text, text, text, ""))
+    except StopIteration:
+        return rv
+
+def get_comment_format():
+    """ Returns a 4-element tuple (first_line, middle_lines, end_line, indent)
+    representing the comment format for the current file.
+
+    It first looks at the 'commentstring', if that ends with %s, it uses that.
+    Otherwise it parses '&comments' and prefers single character comment
+    markers if there are any.
+    """
+    commentstring = vim.eval("&commentstring")
+    if commentstring.endswith("%s"):
+        c = commentstring[:-2]
+        return (c, c, c, "")
+    comments = _parse_comments(vim.eval("&comments"))
+    for c in comments:
+        if c[0] == "SINGLE_CHAR":
+            return c[1:]
+    return comments[0][1:]
+
+
+def foldmarker():
+    "Return a tuple of (open fold marker, close fold marker)"
+    return vim.eval("&foldmarker").split(",")
+
+
+def get_bbox_width():
+	return int(vim.eval("&textwidth - (virtcol('.') == 1 ? 0 : virtcol('.'))")) or 71
+
+
+def make_bbox_top(width):
+	b, m, e, i = (s.strip() for s in get_comment_format())
+	topline = b + math.ceil((width - len(b))/len(m)) * m
+	return topline
+
+
+def make_bbox_bottom(width):
+	b, m, e, i = (s.strip() for s in get_comment_format())
+	bottomline = math.ceil((width - len(b))/len(m)) * m + e
+	return bottomline
+
+
+def	remove_tabstop(snip):
+	start = snip.tabstops[1].start[0]
+	end   = snip.tabstops[1].end[0]
+	del snip.buffer[start:end+1]
+
+	post_row, post_column = snip.tabstops[0].start
+	post_row = post_row - (end - start)
+	snip.cursor.set(post_row, post_column)
+
+endglobal
+
+
+
+
+post_jump "if snip.tabstop==0: remove_tabstop(snip)"
+snippet bbox "A nicer box with current comment symbol" b
+$1
+`!p
+b, m, e, i = (s.strip() for s in get_comment_format())
+lines = t[1].splitlines()
+
+width = get_bbox_width()
+width2 = max([len(line) for line in lines] + [0]) + 2 + 2*len(m)
+width = max(width, width2)
+
+top_border = make_bbox_top(width)
+snip.rv += top_border
+for line in lines:
+	pad = len(top_border) - 2*len(m) - len(line)
+	padleft = math.floor(pad/2)
+	padright = math.ceil(pad/2)
+	snip += m + ' '*padleft + line + ' '*padright + m
+snip += make_bbox_bottom(width)
+`$0
+endsnippet
+
+
+post_jump "if snip.tabstop==0: remove_tabstop(snip)"
+snippet box "A nicer box with current comment symbol" b
+$1
+`!p
+b, m, e, i = (s.strip() for s in get_comment_format())
+lines = t[1].splitlines()
+width = max([len(line) for line in lines] + [0]) + 2 + 2*len(m)
+
+top_border = make_bbox_top(width)
+snip.rv += top_border
+
+for line in lines:
+	pad = len(top_border) - 2*len(m) - len(line)
+	padleft = math.floor(pad/2)
+	padright = math.ceil(pad/2)
+	snip += m + ' '*padleft + line + ' '*padright + m
+
+snip += make_bbox_bottom(width)
+`$0
+endsnippet
+
+snippet fold "Insert a vim fold marker" b
+`!p snip.rv = get_comment_format()[0]` ${1:Fold description} `!p snip.rv = foldmarker()[0]`${2:1} `!p snip.rv = get_comment_format()[2]`
+endsnippet
+
+snippet foldc "Insert a vim fold close marker" b
+`!p snip.rv = get_comment_format()[0]` ${2:1}`!p snip.rv = foldmarker()[1]` `!p snip.rv = get_comment_format()[2]`
+endsnippet
+
+snippet foldp "Insert a vim fold marker pair" b
+`!p snip.rv = get_comment_format()[0]` ${1:Fold description} `!p snip.rv = foldmarker()[0]` `!p snip.rv = get_comment_format()[2]`
+${2:${VISUAL:Content}}
+`!p snip.rv = get_comment_format()[0]` `!p snip.rv = foldmarker()[1]` $1 `!p snip.rv = get_comment_format()[2]`
+endsnippet
+
+##########################
+# LOREM IPSUM GENERATORS #
+##########################
+snippet lorem "Lorem Ipsum - 50 Words" b
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.
+endsnippet
+
+##########################
+# VIM MODELINE GENERATOR #
+##########################
+# See advice on `:help 'tabstop'` for why these values are set. Uses second
+# modeline form ('set') to work in languages with comment terminators
+# (/* like C */).
+snippet modeline "Vim modeline"
+vim`!v ':set '. (&expandtab ? printf('et sw=%i ts=%i', &sw, &ts) : printf('noet sts=%i sw=%i ts=%i', &sts, &sw, &ts)) . (&tw ? ' tw='. &tw : '') . ':'`
+endsnippet
+
+#########
+# DATES #
+#########
+snippet date "YYYY-MM-DD" w
+`date +%Y-%m-%d`
+endsnippet
+
+snippet ddate "Month DD, YYYY" w
+`date +%B\ %d,\ %Y`
+endsnippet
+
+snippet diso "ISO format datetime" w
+`date +%Y-%m-%dT%H:%M:%S%:z`
+endsnippet
+
+snippet time "hh:mm" w
+`date +%H:%M`
+endsnippet
+
+snippet datetime "YYYY-MM-DD hh:mm" w
+`date +%Y-%m-%d\ %H:%M`
+endsnippet
+
+# vim:ft=snippets:
+

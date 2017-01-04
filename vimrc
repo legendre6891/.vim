@@ -1,3 +1,5 @@
+let did_install_default_menus = 1
+let did_install_syntax_menu = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Plugin Installation                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -42,6 +44,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'lifepillar/vim-solarized8'
 Plug 'jnurmine/Zenburn'
 Plug 'fxn/vim-monochrome'
+Plug 'w0ng/vim-hybrid'
+Plug 'zanglg/nova.vim'
 
 
 if has("python3")
@@ -51,7 +55,19 @@ if has("python3")
 endif
 
 Plug 'sjl/clam.vim'
-Plug 'legendre6891/yalp'
+" Plug 'legendre6891/yalp'
+Plug '~/github/yalp'
+
+Plug 'kana/vim-textobj-user'
+Plug 'zandrmartin/vim-textobj-blanklines'
+Plug 'kana/vim-textobj-entire'
+Plug 'glts/vim-textobj-comment'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+
+" Plug 'jiangmiao/auto-pairs'
+Plug 'kana/vim-smartinput'
+
 
 """"""""""""""""""
 "  syntax files  "
@@ -97,7 +113,7 @@ if has("termguicolors") && !has("gui_running") && $TMUX  == ""
 endif
 
 if $TMUX != ""
-  colorscheme monochrome
+  colorscheme apprentice
 endif
 """"""""""
 "  Font  "
@@ -223,7 +239,7 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 "                             Convenience Mappings                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:p:h')).'/' : '%%'
-
+nnoremap cgt *``cgn
 
 
 
@@ -446,3 +462,13 @@ augroup vimrc
   au FileType tex inoremap <buffer> <Tab> <C-R>=(Ulti_Expand() > 0) ? "" : SendBackspace()<CR>
 augroup END
 
+
+augroup yalp
+  autocmd!
+  autocmd BufNewFile,BufRead *.tex setlocal indentexpr&
+augroup END
+
+"""" Spelling
+nnoremap sn ]s
+nnoremap sp [s
+nnoremap ss 1z=
