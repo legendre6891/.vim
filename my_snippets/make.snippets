@@ -1,0 +1,27 @@
+snippet cpp "cpp Makefile template" b
+# Executable Names
+EXE=$1
+OBJ=$2
+
+
+# auxillary files
+AUX=$3
+
+# flags
+CXX=${4:clang++}
+CFLAGS=${5:-std=c++11 -g -O3 -funroll-loops -march=native -mtune=native}
+WARNINGS=${6:-Wall -Wextra -Wpedantic -Wdouble-promotion}
+
+CFLAGS+=$(WARNINGS)
+
+###############
+
+
+all: $(EXE)
+
+$0
+
+.PHONY: clean
+clean:
+	rm $(EXE) $(OBJ)
+endsnippet
