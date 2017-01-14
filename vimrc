@@ -1,5 +1,3 @@
-let did_install_default_menus = 1
-let did_install_syntax_menu = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Plugin Installation                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,6 +66,9 @@ Plug 'kana/vim-textobj-line'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-smartinput'
 
+Plug 'legendre6891/vim-interestingwords'
+
+Plug 'romainl/vim-qf'
 
 """"""""""""""""""
 "  syntax files  "
@@ -178,7 +179,6 @@ set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 """""""""""""""""""""
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
-noremap <Space>/ :nohlsearch<CR>
 
 """""""""""""""""""
 "  Wrap settings  "
@@ -190,6 +190,24 @@ set formatoptions+=t
 "  Easier leader  "
 """""""""""""""""""
 nmap <Space> <leader>
+
+""""""""""""""
+" Wildignore "
+""""""""""""""
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+
+set wildignore+=*.luac                           " Lua byte code
+
+set wildignore+=migrations                       " Django migrations
+set wildignore+=*.pyc                            " Python byte code
+
+set wildignore+=*.orig                           " Merge resolution files
 
 
 """"""""""""""
@@ -222,12 +240,6 @@ function! HighlightSearch()
   endif
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                            Moving Around Windows                             "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-Down> <C-w>w
-nnoremap <C-Up> <C-w>W
-
 """""""""""""""""""""""
 "  Buffer Navigation  "
 """""""""""""""""""""""
@@ -239,8 +251,11 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 "                             Convenience Mappings                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:p:h')).'/' : '%%'
-nnoremap cgt *``cgn
-
+nnoremap cn *``cgn
+nnoremap H ^
+nnoremap L $
+onoremap H ^
+onoremap L $
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -472,3 +487,12 @@ augroup END
 nnoremap sn ]s
 nnoremap sp [s
 nnoremap ss 1z=
+
+
+"""""""""""""""""""""
+" Interesting-Words "
+"""""""""""""""""""""
+let g:interestingWordsDefaultMappings = 0
+nnoremap <silent> cok :call InterestingWords('n')<cr>
+nnoremap <silent> coK :call UncolorAllWords()<cr>
+

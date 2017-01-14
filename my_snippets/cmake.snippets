@@ -1,0 +1,19 @@
+snippet exe "add executable" b
+ADD_EXECUTABLE(${1:project name} ${2:files})$0
+endsnippet
+
+snippet proj "project" b
+PROJECT (${1:project name})$0
+endsnippet
+
+snippet min "minimum version" b
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8.12)
+endsnippet
+
+snippet sub "add subdirectory" b
+ADD_SUBDIRECTORY (${1:dir})$0
+endsnippet
+
+snippet link "link directory" b
+TARGET_LINK_LIBRARIES (${1:project name} ${2:lib})$0
+endsnippet
