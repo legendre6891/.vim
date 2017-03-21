@@ -53,8 +53,8 @@ if has("python3")
 endif
 
 Plug 'sjl/clam.vim'
-" Plug 'legendre6891/yalp'
-Plug '~/github/yalp'
+Plug 'legendre6891/yalp'
+" Plug '~/github/yalp'
 
 Plug 'kana/vim-textobj-user'
 Plug 'zandrmartin/vim-textobj-blanklines'
@@ -65,10 +65,14 @@ Plug 'kana/vim-textobj-line'
 
 " Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-smartinput'
-
 Plug 'legendre6891/vim-interestingwords'
-
 Plug 'romainl/vim-qf'
+
+""""""""""""""""
+" Syntax files "
+""""""""""""""""
+Plug 'nickhutchinson/vim-cmake-syntax'
+
 
 """"""""""""""""""
 "  syntax files  "
@@ -87,6 +91,11 @@ set visualbell t_vb=
 set novisualbell
 if has("belloff")
   set belloff=all
+endif
+if has("macunix")
+  set shell=/usr/local/bin/bash
+elseif has("unix")
+  set shell=/bin/bash
 endif
 
 """"""""""""
@@ -251,12 +260,28 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 "                             Convenience Mappings                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:p:h')).'/' : '%%'
-nnoremap cn *``cgn
 nnoremap H ^
 nnoremap L $
 onoremap H ^
 onoremap L $
 
+let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
+
+nnoremap cn *``cgn
+nnoremap cN *``cgN
+
+vnoremap <expr> cn g:mc . "``cgn"
+vnoremap <expr> cN g:mc . "``cgN"
+
+function! SetupCR()
+  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
+endfunction
+
+nnoremap cq :call SetupCR()<CR>*``qz
+nnoremap cQ :call SetupCR()<CR>#``qz
+
+vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
+vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Plugin Mappings                                "

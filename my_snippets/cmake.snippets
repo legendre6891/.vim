@@ -17,3 +17,11 @@ endsnippet
 snippet link "link directory" b
 TARGET_LINK_LIBRARIES (${1:project name} ${2:lib})$0
 endsnippet
+
+snippet compile "compile flasg" b
+TARGET_COMPILE_OPTIONS (${1:project name} ${3:PUBLIC} ${2:-O3 --std=c++14})$0
+endsnippet
+
+snippet prop "set property" b
+SET_PROPERTY(TARGET ${1:target} PROPERTY ${2:prop} ${3:value})$0
+endsnippet
