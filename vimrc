@@ -132,7 +132,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=PragmataPro:h14
   elseif has("unix")
-    set guifont=Fira\ Code\ 9
+    set guifont=Input\ 10
   endif
 endif
 
