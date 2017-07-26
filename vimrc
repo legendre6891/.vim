@@ -23,6 +23,7 @@ Plug 'wincent/command-t', {
   \ }
 
 Plug 'chrisbra/Colorizer'
+Plug 'ajmwagar/vim-dues'
 
 Plug 'SirVer/ultisnips'
 Plug 'danro/rename.vim'
@@ -329,8 +330,8 @@ nnoremap z<Space> za
 """""""""""""""""""
 "  Easier splits  "
 """""""""""""""""""
-nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
-nnoremap <expr><silent> _  !v:count ? "<C-W>s<C-W><Down>"  : '_' 
+nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
+nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
 
 """""""""""""""""""""""""""""""""""""""""""""
