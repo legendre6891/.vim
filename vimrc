@@ -9,7 +9,10 @@ call plug#begin('~/.vim/plugged')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-sensible'
+if !has('nvim')
+  Plug 'tpope/vim-sensible'
+  Plug 'equalsraf/neovim-gui-shim'
+endif
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
@@ -95,7 +98,7 @@ endif
 if has("macunix")
   set shell=/usr/local/bin/bash
 elseif has("unix")
-  set shell=/bin/bash
+  set shell=/bin/zsh
 endif
 
 """"""""""""
@@ -132,7 +135,7 @@ if has("gui_running")
   if has("macunix")
     set guifont=PragmataPro:h14
   elseif has("unix")
-    set guifont=Input\ 10
+    set guifont=
   endif
 endif
 
@@ -167,15 +170,6 @@ set expandtab       " substitute spaces for tabs
 
 set nolist
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-
-
-""""""""""
-"  size  "
-""""""""""
-" if has("gui_running")
-"   set lines=35
-"   set columns=87
-" endif
 
 
 """""""""""""""""
