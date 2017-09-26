@@ -26,7 +26,6 @@ Plug 'wincent/command-t', {
   \ }
 
 Plug 'chrisbra/Colorizer'
-Plug 'ajmwagar/vim-dues'
 
 Plug 'SirVer/ultisnips'
 Plug 'danro/rename.vim'
@@ -48,6 +47,7 @@ Plug 'jnurmine/Zenburn'
 Plug 'fxn/vim-monochrome'
 Plug 'w0ng/vim-hybrid'
 Plug 'zanglg/nova.vim'
+Plug 'arcticicestudio/nord-vim'
 
 
 if has("python3")
@@ -115,20 +115,12 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-if has("gui_running")
-    set guioptions=c
-    colorscheme apprentice
-else
-    colorscheme apprentice
-endif
-
 if has("termguicolors") && !has("gui_running") && $TMUX  == ""
   set termguicolors
 endif
 
-if $TMUX != ""
-  colorscheme apprentice
-endif
+
+colors nord
 """"""""""
 "  Font  "
 """"""""""
