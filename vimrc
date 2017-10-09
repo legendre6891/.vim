@@ -48,6 +48,7 @@ Plug 'fxn/vim-monochrome'
 Plug 'w0ng/vim-hybrid'
 Plug 'zanglg/nova.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'twerth/ir_black'
 
 
 if has("python3")
@@ -120,7 +121,7 @@ if has("termguicolors") && !has("gui_running") && $TMUX  == ""
 endif
 
 
-colors nord
+colors ir_black
 """"""""""
 "  Font  "
 """"""""""
