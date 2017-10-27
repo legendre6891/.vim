@@ -363,6 +363,22 @@ xmap ga <Plug>(EasyAlign)
 """""""""
 nnoremap <silent> <C-p> :FZF<cr>
 
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+
 
 """""""""""""""
 "  FZFBUFFER  "
@@ -409,9 +425,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""
 "  VIMFILER  "
 """""""""""""
-if has("python3")
-  nnoremap - :VimFilerExplorer<CR>
-endif
+" if has("python3")
+"   nnoremap - :VimFilerExplorer<CR>
+" endif
 
 
 
