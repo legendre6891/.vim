@@ -1,3 +1,21 @@
+if !has('nvim')
+  set guiheadroom=0
+endif
+" GUI options that should load first
+set guioptions-=m
+set guioptions-=M
+set guioptions-=r
+set guioptions-=l
+set guioptions-=L
+set guioptions-=t
+set guioptions-=T
+set guioptions+=c
+set guioptions+=i
+
+" aegimrLtT
+
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Plugin Installation                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,13 +143,13 @@ colors ir_black
 """"""""""
 "  Font  "
 """"""""""
-if has("gui_running")
-  if has("macunix")
-    set guifont=PragmataPro:h14
-  elseif has("unix")
-    set guifont=
-  endif
-endif
+" if has("gui_running")
+"   if has("macunix")
+"     set guifont=PragmataPro:h14
+"   elseif has("unix")
+"     set guifont=Mononoki\ 12
+"   endif
+" endif
 
 
 """"""""""""""""""""""""""
@@ -409,9 +427,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""
 "  VIMFILER  "
 """""""""""""
-if has("python3")
-  nnoremap - :VimFilerExplorer<CR>
-endif
+" if has("python3")
+"   nnoremap - :VimFilerExplorer<CR>
+" endif
 
 
 
