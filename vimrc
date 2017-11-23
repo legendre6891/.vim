@@ -12,8 +12,9 @@ set guioptions-=T
 set guioptions+=c
 set guioptions+=i
 
-" aegimrLtT
 
+" Disable highlighting parens
+let loaded_matchparen = 1
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -29,8 +30,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 if !has('nvim')
   Plug 'tpope/vim-sensible'
+endif
+
+if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
 endif
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
@@ -39,19 +44,13 @@ Plug 'tpope/vim-dispatch'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 
-Plug 'wincent/command-t', {
-  \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
-  \ }
-
 Plug 'chrisbra/Colorizer'
 
-Plug 'SirVer/ultisnips'
 Plug 'danro/rename.vim'
 Plug 'thinca/vim-visualstar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-slash'
 
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -67,17 +66,11 @@ Plug 'w0ng/vim-hybrid'
 Plug 'zanglg/nova.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'twerth/ir_black'
+Plug 'cocopon/iceberg.vim'
 
-
-if has("python3")
-  Plug 'Shougo/denite.nvim'
-  Plug 'Shougo/unite.vim'
-  Plug 'Shougo/vimfiler.vim'
-endif
 
 Plug 'sjl/clam.vim'
 Plug 'legendre6891/yalp'
-" Plug '~/github/yalp'
 
 Plug 'kana/vim-textobj-user'
 Plug 'zandrmartin/vim-textobj-blanklines'
@@ -86,22 +79,16 @@ Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 
-" Plug 'jiangmiao/auto-pairs'
-Plug 'kana/vim-smartinput'
-Plug 'legendre6891/vim-interestingwords'
 Plug 'romainl/vim-qf'
 
 """"""""""""""""
 " Syntax files "
 """"""""""""""""
 Plug 'nickhutchinson/vim-cmake-syntax'
-
-
-""""""""""""""""""
-"  syntax files  "
-""""""""""""""""""
 Plug 'keith/tmux.vim'
 Plug 'rust-lang/rust.vim'
+
+
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -118,7 +105,7 @@ endif
 if has("macunix")
   set shell=/usr/local/bin/bash
 elseif has("unix")
-  set shell=/bin/zsh
+  set shell=/bin/bash
 endif
 
 """"""""""""
@@ -140,9 +127,12 @@ endif
 
 
 colors ir_black
+
+
 """"""""""
 "  Font  "
 """"""""""
+
 " if has("gui_running")
 "   if has("macunix")
 "     set guifont=PragmataPro:h14
@@ -156,29 +146,22 @@ colors ir_black
 "  Indentation Settings  "
 """"""""""""""""""""""""""
 set hidden
-set nowrap        " don't wrap lines
-set tabstop=4     " a tab is four spaces
+set nowrap       " don't wrap lines
+set tabstop=4    " a tab is four spaces
 set backspace=indent,eol,start
 set expandtab
 set nosmartindent
-set noautoindent    " turn off indent
-set nocopyindent    " turn off indent
-set number        " always show line numbers
-set shiftwidth=4  " number of spaces to use for autoindenting
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
-set showmatch     " set show matching parenthesis
-set ignorecase    " ignore case when searching
-set smartcase     " ignore case if search pattern is all lowercase,
-                  "    case-sensitive otherwise
-set smarttab      " insert tabs on the start of a line according to
-                  "    shiftwidth, not tabstop
-
-" Facebook indent style; override these explicitly to turn them off.
-set shiftwidth=2    " two spaces per indent
-set tabstop=2       " number of spaces per tab in display
-set softtabstop=2   " number of spaces per tab when inserting
-set expandtab       " substitute spaces for tabs
-
+set noautoindent " turn off indent
+set nocopyindent " turn off indent
+set number       " always show line numbers
+set shiftwidth=4 " number of spaces to use for autoindenting
+set shiftround   " use multiple of shiftwidth when indenting with '<' and '>'
+set showmatch    " set show matching parenthesis
+set ignorecase   " ignore case when searching
+set smartcase    " ignore case if search pattern is all lowercase,
+                 " case-sensitive otherwise
+set smarttab     " insert tabs on the start of a line according to
+                 " shiftwidth, not tabstop
 
 set nolist
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
@@ -195,16 +178,12 @@ set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 
+
 """""""""""""""""""
 "  Wrap settings  "
 """""""""""""""""""
 set tw=80
 set formatoptions+=t
-
-"""""""""""""""""""
-"  Easier leader  "
-"""""""""""""""""""
-nmap <Space> <leader>
 
 """"""""""""""
 " Wildignore "
@@ -216,12 +195,9 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX bullshit
-
 set wildignore+=*.luac                           " Lua byte code
-
 set wildignore+=migrations                       " Django migrations
 set wildignore+=*.pyc                            " Python byte code
-
 set wildignore+=*.orig                           " Merge resolution files
 
 
@@ -293,17 +269,6 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "                               Plugin Mappings                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""
-"  Tmux Navigator  "
-""""""""""""""""""""
-
-" let g:tmux_navigator_no_mappings = 1
-
-" nnoremap <silent> <Left> :TmuxNavigateLeft<cr>
-" nnoremap <silent> <Down> :TmuxNavigateDown<cr>
-" nnoremap <silent> <Up> :TmuxNavigateUp<cr>
-" nnoremap <silent> <Right> :TmuxNavigateRight<cr>
-
 """"""""""""""""""""""""""""
 "  macvim-specific `hack`  "
 """"""""""""""""""""""""""""
@@ -330,13 +295,11 @@ nmap <silent> \sv :so $MYVIMRC<CR>
 nnoremap <silent> <space><space> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 
-nnoremap z<Space> za
-
 """""""""""""""""""
 "  Easier splits  "
 """""""""""""""""""
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
-nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
+nnoremap <expr><silent> -     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
 
 """""""""""""""""""""""""""""""""""""""""""""
@@ -354,21 +317,6 @@ cnoremap <M-f> <S-Right>
 """""""""""""""""""""
 "  Plugin Mappings  "
 """""""""""""""""""""
-
-"""""""""""""""
-"  Ultisnips  "
-"""""""""""""""
-let g:UltiSnipsExpandTrigger="<TAB>"
-let g:UltiSnipsJumpForwardTrigger="<TAB>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]
-let g:UltiSnipsSnippetsDir=$HOME . "/.vim/my_snippets"
-
-let g:UltiSnipsNoPythonWarning = 1
-
-nmap <silent> \ee :UltiSnipsEdit<CR>
-
 
 """""""""""""""
 "  EasyAlign  "
@@ -456,55 +404,21 @@ let g:CommandTFileScanner="watchman"
 """""""""""""""
 "  vim-slash  "
 """""""""""""""
-if (v:version >= 800)
-  function! s:blink(times, delay)
-    let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
-
-    function! s:blink.tick(_)
-      let self.ticks -= 1
-      let active = self == s:blink && self.ticks > 0
-
-      if !self.clear() && active && &hlsearch
-        let [line, col] = [line('.'), col('.')]
-        let w:blink_id = matchadd('IncSearch',
-              \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
-      endif
-      if active
-        call timer_start(self.delay, self.tick)
-      endif
-    endfunction
-
-    function! s:blink.clear()
-      if exists('w:blink_id')
-        call matchdelete(w:blink_id)
-        unlet w:blink_id
-        return 1
-      endif
-    endfunction
-
-    call s:blink.clear()
-    call s:blink.tick(0)
-    return ''
-  endfunction
-
-  if has("macunix")
-    noremap <expr> <plug>(slash-after) <sid>blink(2, 40) . "zz"
-  elseif has("unix")
-    noremap <expr> <plug>(slash-after) <sid>blink(2, 50) . "zz"
-  endif
+if has('timers')
+  " Blink 2 times with 50ms interval
+  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
 endif
 
 
 """"""""""
 "  GTFO  "
 """"""""""
-let g:gtfo#terminals = { 'mac' : 'iterm', 'unix': 'st -d' }
+let g:gtfo#terminals = { 'mac' : 'iterm', 'unix': 'urxvt -cd' }
 
 
-""""""""""
-"  GTFO  "
-""""""""""
-" LATEX
+"""""""""""
+"  LATEX  "
+"""""""""""
 let g:tex_flavor="latex"
 
 let g:ulti_expand_res = 0 "default value, just set once
@@ -543,3 +457,4 @@ let g:interestingWordsDefaultMappings = 0
 nnoremap <silent> cok :call InterestingWords('n')<cr>
 nnoremap <silent> coK :call UncolorAllWords()<cr>
 
+" set shell=/bin/bash
